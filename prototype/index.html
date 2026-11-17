@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laundry Roulette | Hostel Care</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <main class="website">
+
+    <!-- Header Navigation -->
+    <header class="header">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 12c2-2.5 5.5 2.5 8 0"/>
+          </svg>
+        </span>
+        <div class="logo-text">
+          <span>Laundry Roulette</span>
+          <small>Hostel Laundry Services</small>
+        </div>
+      </a>
+    </header>
+
+    <!-- Main Hero Section -->
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>
+          Laundry day,<br>
+          <span class="rotator" id="rotator" aria-live="polite">without the hassle.</span>
+        </h1>
+        <p>A smarter way to submit, track, and collect your hostel laundry.</p>
+      </div>
+
+      <div class="hero-image">
+        <img src="laundry-hero.jpg" alt="Modern laundry washing machine with linen basket and towels">
+      </div>
+    </section>
+
+    <!-- Role Gateway Selection -->
+    <section class="portal-section reveal" id="portals">
+      <h2>Where would you like to go?</h2>
+
+      <div class="portal-grid">
+        <!-- Student Gateway -->
+        <a href="student.html" class="portal-card student-card">
+          <div class="portal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="7" r="3.5"/>
+              <path d="M4.5 21v-2a7.5 7.5 0 0 1 15 0v2"/>
+            </svg>
+          </div>
+          <h3>I'm a student</h3>
+          <p>My laundry, my orders, my updates.</p>
+          <span class="portal-link">
+            Enter portal <span class="arrow">&rarr;</span>
+          </span>
+        </a>
+
+        <!-- Staff Desk Gateway -->
+        <a href="staff.html" class="portal-card staff-card">
+          <div class="portal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="4" width="14" height="18" rx="2"/>
+              <path d="M9 4V2h6v2"/>
+              <path d="m9 12 2 2 4-4"/>
+              <path d="M9 17h6"/>
+            </svg>
+          </div>
+          <h3>I'm staff</h3>
+          <p>Manage orders and laundry operations.</p>
+          <span class="portal-link">
+            Enter portal <span class="arrow">&rarr;</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Simple Footer -->
+    <footer class="footer">
+      <p>Drop it, track it, collect it</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // Rotating headline phrase
+    const phrases = [
+      "without the hassle.",
+      "without the queue.",
+      "without the guesswork.",
+      "without the stress."
+    ];
+    const el = document.getElementById("rotator");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let i = 0;
+
+    if (!reduce) {
+      setInterval(() => {
+        el.classList.add("out");
+        setTimeout(() => {
+          i = (i + 1) % phrases.length;
+          el.textContent = phrases[i];
+          el.classList.remove("out");
+        }, 350);
+      }, 3200);
+    }
+
+    // Reveal portal section on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach(n => io.observe(n));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Desk Portal | Laundry Roulette</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <main class="website">
+
+    <!-- Top Navigation & Staff Context Bar -->
+    <header class="header portal-header">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 12c2-2.5 5.5 2.5 8 0"/>
+          </svg>
+        </span>
+        <div class="logo-text">
+          <span>Laundry Roulette</span>
+          <small>Staff &amp; Counter Desk</small>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <div class="user-pill">
+          <span class="dot"></span>
+          <span>Operator Desk &middot; Shift A (All Blocks)</span>
+        </div>
+        <a href="index.html" class="exit-link">&larr; Switch Role</a>
+      </div>
+    </header>
+
+    <!-- Working 4-Tab Switcher Bar -->
+    <nav class="sub-nav" role="tablist" aria-label="Staff Portal Sections">
+      <button type="button" class="sub-nav-link active" data-tab="view-desk-overview">Desk Summary</button>
+      <button type="button" class="sub-nav-link" data-tab="view-intake">Bag Intake</button>
+      <button type="button" class="sub-nav-link" data-tab="view-batches">Manage Batches</button>
+      <button type="button" class="sub-nav-link" data-tab="view-disputes">Dispute Queue</button>
+    </nav>
+
+    <!-- TAB 1: DESK SUMMARY -->
+    <section class="portal-block tab-panel active" id="view-desk-overview">
+      <div class="section-head">
+        <div>
+          <h2>Today's Counter Overview</h2>
+          <p>Live batch distribution across hostel reception desks</p>
+        </div>
+      </div>
+
+      <div class="staff-stats-grid">
+        <div class="ui-card mini-stat">
+          <span class="stat-label">Received Today</span>
+          <strong class="stat-value">18</strong>
+          <small>Tagged bags awaiting wash</small>
+        </div>
+
+        <div class="ui-card mini-stat">
+          <span class="stat-label">In Wash / Drying</span>
+          <strong class="stat-value">24</strong>
+          <small>Active machine batches</small>
+        </div>
+
+        <div class="ui-card mini-stat">
+          <span class="stat-label">Ready at Desk</span>
+          <strong class="stat-value">11</strong>
+          <small>Awaiting student PIN pickup</small>
+        </div>
+
+        <div class="ui-card mini-stat alert-stat">
+          <span class="stat-label">Open Complaints</span>
+          <strong class="stat-value" id="openDisputeCount">2</strong>
+          <small>Requires supervisor check</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: BAG INTAKE -->
+    <section class="portal-block tab-panel" id="view-intake">
+      <div class="section-head">
+        <div>
+          <h2>Counter Drop-Off Intake</h2>
+          <p>Verify student clothes count and bind a physical laundry bag tag</p>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <form id="intakeForm" class="form-layout">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="studentReg">Student Reg / Roll No.</label>
+              <input type="text" id="studentReg" placeholder="e.g., 12604549" required>
+            </div>
+
+            <div class="form-group">
+              <label for="staffBlock">Hostel Block</label>
+              <select id="staffBlock" required>
+                <option value="BH-1">BH-1</option>
+                <option value="BH-2">BH-2</option>
+                <option value="BH-3">BH-3</option>
+                <option value="BH-4">BH-4</option>
+                <option value="BH-5">BH-5</option>
+                <option value="BH-6">BH-6</option>
+                <option value="BH-7">BH-7</option>
+                <option value="GH-1">GH-1</option>
+                <option value="GH-2">GH-2</option>
+                <option value="GH-3">GH-3</option>
+                <option value="GH-4">GH-4</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="verifiedCount">Verified Garment Count</label>
+              <input type="number" id="verifiedCount" min="1" max="30" placeholder="e.g., 12" required>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn-primary">Log Bag &amp; Issue Tag &rarr;</button>
+          </div>
+
+          <div id="intakeResult" class="feedback-box hidden" role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 3: MANAGE BATCHES -->
+    <section class="portal-block tab-panel" id="view-batches">
+      <div class="section-head">
+        <div>
+          <h2>Active Hostel Batches</h2>
+          <p>Update processing stage or verify 4-digit Collection PIN before handover</p>
+        </div>
+
+        <div class="filter-wrap">
+          <label for="blockFilter" class="sr-only">Filter by Hostel Block</label>
+          <select id="blockFilter" class="compact-select">
+            <option value="ALL">All Hostel Blocks</option>
+            <option value="BH-1">BH-1 Only</option>
+            <option value="BH-3">BH-3 Only</option>
+            <option value="GH-2">GH-2 Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <div class="table-wrap no-top-margin">
+          <table class="history-table" id="batchTable">
+            <thead>
+              <tr>
+                <th>Token ID</th>
+                <th>Student / Block</th>
+                <th>Items &amp; Care</th>
+                <th>Pickup PIN</th>
+                <th>Current Stage</th>
+                <th>Update Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-block="BH-1">
+                <td><strong>LD-003</strong></td>
+                <td>Aditya Raj &middot; <strong>BH-1</strong> (412)</td>
+                <td>14 Clothes &middot; <em>Uniforms</em></td>
+                <td><code class="pin-code">4829</code></td>
+                <td><span class="table-badge ready stage-pill">Ready</span></td>
+                <td>
+                  <select class="stage-select" aria-label="Update status for LD-003">
+                    <option value="Received">Received</option>
+                    <option value="In Process">In Process</option>
+                    <option value="Ready" selected>Ready</option>
+                    <option value="Collected">Collected (PIN Verified)</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr data-block="GH-2">
+                <td><strong>LD-004</strong></td>
+                <td>Ananya Sharma &middot; <strong>GH-2</strong> (208)</td>
+                <td>10 Clothes &middot; <em>Separate Whites</em></td>
+                <td><code class="pin-code">7194</code></td>
+                <td><span class="table-badge process stage-pill">In Process</span></td>
+                <td>
+                  <select class="stage-select" aria-label="Update status for LD-004">
+                    <option value="Received">Received</option>
+                    <option value="In Process" selected>In Process</option>
+                    <option value="Ready">Ready</option>
+                    <option value="Collected">Collected (PIN Verified)</option>
+                  </select>
+                </td>
+              </tr>
+
+              <tr data-block="BH-3">
+                <td><strong>LD-005</strong></td>
+                <td>Rohan Verma &middot; <strong>BH-3</strong> (115)</td>
+                <td>16 Clothes &middot; <em>Regular Wash</em></td>
+                <td><code class="pin-code">3052</code></td>
+                <td><span class="table-badge received stage-pill">Received</span></td>
+                <td>
+                  <select class="stage-select" aria-label="Update status for LD-005">
+                    <option value="Received" selected>Received</option>
+                    <option value="In Process">In Process</option>
+                    <option value="Ready">Ready</option>
+                    <option value="Collected">Collected (PIN Verified)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="stageFeedback" class="feedback-box hidden" role="status"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DISPUTE QUEUE -->
+    <section class="portal-block tab-panel" id="view-disputes">
+      <div class="section-head">
+        <div>
+          <h2>Student Complaints &amp; Disputes</h2>
+          <p>Resolve missing garment or delay reports raised by hostellers</p>
+        </div>
+      </div>
+
+      <div class="dispute-list">
+        <div class="ui-card dispute-card" id="ticket-IS-001">
+          <div class="dispute-main">
+            <div class="dispute-top">
+              <span class="ticket-id">IS-001</span>
+              <span class="dispute-tag">Missing Garment</span>
+              <span class="dispute-meta">Token <strong>LD-002</strong> &middot; BH-1 (Room 412)</span>
+            </div>
+            <p class="dispute-desc">"1 navy blue college sweatshirt missing from bag LD-002 after drying batch."</p>
+          </div>
+          <div class="dispute-action">
+            <button type="button" class="btn-secondary resolve-btn" data-ticket="IS-001">Mark Resolved &#10003;</button>
+          </div>
+        </div>
+
+        <div class="ui-card dispute-card" id="ticket-IS-002">
+          <div class="dispute-main">
+            <div class="dispute-top">
+              <span class="ticket-id">IS-002</span>
+              <span class="dispute-tag">Delayed Return</span>
+              <span class="dispute-meta">Token <strong>LD-004</strong> &middot; GH-2 (Room 208)</span>
+            </div>
+            <p class="dispute-desc">"Submitted on 12 Nov morning; needed white lab coat for Monday morning practical."</p>
+          </div>
+          <div class="dispute-action">
+            <button type="button" class="btn-secondary resolve-btn" data-ticket="IS-002">Mark Resolved &#10003;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Drop it, track it, collect it</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // 1. Working Tab Switching for the 4 Staff buttons
+    const staffTabButtons = document.querySelectorAll(".sub-nav-link");
+    const staffTabPanels = document.querySelectorAll(".tab-panel");
+
+    staffTabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        staffTabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const targetId = btn.dataset.tab;
+        staffTabPanels.forEach(panel => {
+          panel.classList.toggle("active", panel.id === targetId);
+        });
+      });
+    });
+
+    // 2. Counter Intake Form Confirmation
+    document.getElementById("intakeForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const reg = document.getElementById("studentReg").value;
+      const block = document.getElementById("staffBlock").value;
+      const count = document.getElementById("verifiedCount").value;
+      const newToken = "LD-0" + Math.floor(10 + Math.random() * 89);
+      const pin = Math.floor(1000 + Math.random() * 9000);
+
+      const box = document.getElementById("intakeResult");
+      box.innerHTML = `<strong>Bag Tagged (${newToken}):</strong> Verified ${count} clothes for Reg No. <strong>${reg}</strong> (${block}). Generated Handover PIN: <strong>${pin}</strong>.`;
+      box.classList.remove("hidden");
+      this.reset();
+    });
+
+    // 3. Filter batches by Hostel Block
+    document.getElementById("blockFilter").addEventListener("change", function() {
+      const selected = this.value;
+      document.querySelectorAll("#batchTable tbody tr").forEach(row => {
+        row.style.display = (selected === "ALL" || row.dataset.block === selected) ? "" : "none";
+      });
+    });
+
+    // 4. Live Stage Dropdown Update
+    document.querySelectorAll(".stage-select").forEach(select => {
+      select.addEventListener("change", function() {
+        const row = this.closest("tr");
+        const token = row.querySelector("strong").textContent;
+        const pill = row.querySelector(".stage-pill");
+        const newStage = this.value;
+
+        pill.textContent = newStage === "Collected (PIN Verified)" ? "Collected" : newStage;
+        pill.className = "table-badge stage-pill";
+
+        if (newStage === "Ready") pill.classList.add("ready");
+        else if (newStage === "In Process") pill.classList.add("process");
+        else if (newStage === "Received") pill.classList.add("received");
+        else pill.classList.add("collected");
+
+        const feedback = document.getElementById("stageFeedback");
+        feedback.innerHTML = `Updated <strong>${token}</strong> status to <strong>${newStage}</strong>.`;
+        feedback.classList.remove("hidden");
+      });
+    });
+
+    // 5. Resolve Complaint Ticket
+    document.querySelectorAll(".resolve-btn").forEach(btn => {
+      btn.addEventListener("click", function() {
+        const card = this.closest(".dispute-card");
+        card.classList.add("resolved-card");
+        this.textContent = "Resolved";
+        this.disabled = true;
+
+        const counter = document.getElementById("openDisputeCount");
+        const current = parseInt(counter.textContent, 10);
+        if (current > 0) counter.textContent = current - 1;
+      });
+    });
+  </script>
+
+</body>
+</html>

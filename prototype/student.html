@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal | Laundry Roulette</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <main class="website">
+
+    <!-- Top Navigation -->
+    <header class="header portal-header">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 12c2-2.5 5.5 2.5 8 0"/>
+          </svg>
+        </span>
+        <div class="logo-text">
+          <span>Laundry Roulette</span>
+          <small>Student Portal</small>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <div class="user-pill">
+          <span class="dot"></span>
+          <span>Rainy Dhankhar &middot; Roll 51 &middot; GS-12</span>
+        </div>
+        <a href="index.html" class="exit-link">&larr; Switch Role</a>
+      </div>
+    </header>
+
+    <!-- Desk Schedule Strip -->
+    <div class="context-banner">
+      <div class="context-left">
+        <strong>Hostel Counter Open</strong>
+        <span>9:00 AM – 7:00 PM &middot; Ground Floor Reception (BH-1)</span>
+      </div>
+      <div class="context-right">
+        Next Block Pickup: <strong>Today, 5:30 PM</strong>
+      </div>
+    </div>
+
+    <!-- Working 4-Tab Switcher Bar -->
+    <nav class="sub-nav" role="tablist" aria-label="Student Portal Sections">
+      <button type="button" class="sub-nav-link active" data-tab="view-overview">My Laundry</button>
+      <button type="button" class="sub-nav-link" data-tab="view-submit">Submit Clothes</button>
+      <button type="button" class="sub-nav-link" data-tab="view-track">Track Token</button>
+      <button type="button" class="sub-nav-link" data-tab="view-issue">Report Issue</button>
+    </nav>
+
+    <!-- TAB 1: MY LAUNDRY -->
+    <section class="portal-block tab-panel active" id="view-overview">
+      <div class="section-head">
+        <div>
+          <h2>Active Laundry Batch</h2>
+          <p>Your current bag with the hostel laundry service</p>
+        </div>
+        <span class="quota-badge">Monthly Quota: 3 / 8 Washes Used</span>
+      </div>
+
+      <div class="active-grid">
+        <div class="ui-card active-order-card">
+          <div class="order-top">
+            <div>
+              <span class="token-label">Laundry Token</span>
+              <h3 class="token-id">LD-003</h3>
+            </div>
+            <span class="status-pill ready">Ready for Collection</span>
+          </div>
+
+          <p class="order-meta">14 Items (Includes 2 Uniforms) &middot; Dropped off 14 Nov &middot; Block BH-1</p>
+
+          <div class="stepper">
+            <div class="step done">
+              <div class="step-circle">&#10003;</div>
+              <span>Received</span>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step done">
+              <div class="step-circle">&#10003;</div>
+              <span>In Process</span>
+            </div>
+            <div class="step-line done"></div>
+            <div class="step current">
+              <div class="step-circle">3</div>
+              <span>Ready</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+              <div class="step-circle">4</div>
+              <span>Collected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-card pickup-pass-card">
+          <span class="pass-eyebrow">Counter Handover Pass</span>
+          <h3>Collection PIN</h3>
+          <div class="pin-box">4829</div>
+          <p>Show token <strong>LD-003</strong> and this 4-digit PIN at the desk to verify your bag tag.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: SUBMIT CLOTHES -->
+    <section class="portal-block tab-panel" id="view-submit">
+      <div class="section-head">
+        <div>
+          <h2>Submit New Laundry</h2>
+          <p>Fill out your bag details before counter drop-off to generate a token</p>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <form id="submitForm" class="form-layout">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="hostelBlock">Hostel Block</label>
+              <select id="hostelBlock" required>
+                <option value="BH-1" selected>BH-1 (Boys Hostel 1)</option>
+                <option value="BH-2">BH-2 (Boys Hostel 2)</option>
+                <option value="BH-3">BH-3 (Boys Hostel 3)</option>
+                <option value="GH-1">GH-1 (Girls Hostel 1)</option>
+                <option value="GH-2">GH-2 (Girls Hostel 2)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="roomNo">Room Number</label>
+              <input type="text" id="roomNo" value="412" required>
+            </div>
+
+            <div class="form-group">
+              <label for="clothCount">Total Clothes Count</label>
+              <input type="number" id="clothCount" min="1" max="30" placeholder="e.g., 12" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Special Wash Instructions</label>
+            <div class="chip-group">
+              <label class="check-chip"><input type="checkbox"> <span>Uniforms / Formals</span></label>
+              <label class="check-chip"><input type="checkbox"> <span>Separate Whites</span></label>
+              <label class="check-chip"><input type="checkbox"> <span>Delicate Fabric</span></label>
+              <label class="check-chip"><input type="checkbox"> <span>Do Not Bleach</span></label>
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn-primary">Generate Drop-Off Token &rarr;</button>
+          </div>
+
+          <div id="submitResult" class="feedback-box hidden" role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 3: TRACK TOKEN -->
+    <section class="portal-block tab-panel" id="view-track">
+      <div class="section-head">
+        <div>
+          <h2>Track Token &amp; Past History</h2>
+          <p>Check any Laundry Token ID or view your past collected bags</p>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <div class="lookup-bar">
+          <input type="text" id="tokenSearchInput" placeholder="Enter Laundry Token ID (e.g., LD-003 or LD-002)">
+          <button type="button" id="tokenSearchBtn" class="btn-secondary">Check Status</button>
+        </div>
+        <div id="lookupResult" class="feedback-box hidden" role="status"></div>
+
+        <div class="table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Token ID</th>
+                <th>Drop-Off Date</th>
+                <th>Items</th>
+                <th>Care Notes</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>LD-003</strong></td>
+                <td>14 Nov 2026</td>
+                <td>14 Clothes</td>
+                <td>Uniforms / Formals</td>
+                <td><span class="table-badge ready">Ready</span></td>
+              </tr>
+              <tr>
+                <td><strong>LD-002</strong></td>
+                <td>08 Nov 2026</td>
+                <td>11 Clothes</td>
+                <td>Separate Whites</td>
+                <td><span class="table-badge collected">Collected</span></td>
+              </tr>
+              <tr>
+                <td><strong>LD-001</strong></td>
+                <td>01 Nov 2026</td>
+                <td>15 Clothes</td>
+                <td>Regular Wash</td>
+                <td><span class="table-badge collected">Collected</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: REPORT ISSUE -->
+    <section class="portal-block tab-panel" id="view-issue">
+      <div class="section-head">
+        <div>
+          <h2>Report Missing or Damaged Item</h2>
+          <p>Raise a formal issue ticket linked to your laundry token</p>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <form id="issueForm" class="form-layout">
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="issueToken">Related Laundry Token</label>
+              <select id="issueToken" required>
+                <option value="LD-003">LD-003 (14 Nov · 14 Clothes)</option>
+                <option value="LD-002">LD-002 (08 Nov · 11 Clothes)</option>
+                <option value="LD-001">LD-001 (01 Nov · 15 Clothes)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="issueType">Issue Type</label>
+              <select id="issueType" required>
+                <option value="Missing Garment">Missing Garment</option>
+                <option value="Delayed Return">Delayed Return</option>
+                <option value="Clothes Mixed Up">Clothes Mixed Up</option>
+                <option value="Damaged Item">Damaged Item</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="issueDesc">Garment &amp; Issue Description</label>
+            <textarea id="issueDesc" rows="3" placeholder="e.g., 1 navy blue college sweatshirt missing from bag LD-003" required></textarea>
+          </div>
+
+          <div class="form-footer">
+            <button type="submit" class="btn-primary">Submit Issue Report &rarr;</button>
+          </div>
+
+          <div id="issueResult" class="feedback-box hidden" role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Drop it, track it, collect it</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // 1. Working Tab Switching for the 4 buttons
+    const tabButtons = document.querySelectorAll(".sub-nav-link");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Highlight clicked button
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        // Show matching section, hide others
+        const targetId = btn.dataset.tab;
+        tabPanels.forEach(panel => {
+          panel.classList.toggle("active", panel.id === targetId);
+        });
+      });
+    });
+
+    // 2. Submit Clothes Form Confirmation
+    document.getElementById("submitForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const count = document.getElementById("clothCount").value;
+      const block = document.getElementById("hostelBlock").value;
+      const token = "LD-0" + Math.floor(10 + Math.random() * 89);
+
+      const box = document.getElementById("submitResult");
+      box.innerHTML = `<strong>Token Created: ${token}</strong> &mdash; ${count} items logged for ${block}. Show this token at the desk.`;
+      box.classList.remove("hidden");
+    });
+
+    // 3. Track Token Lookup
+    const sampleTokens = {
+      "LD-003": "<strong>LD-003 (Ready):</strong> 14 items at BH-1 desk. Collection PIN: <strong>4829</strong>.",
+      "LD-002": "<strong>LD-002 (Collected):</strong> 11 items collected on 10 Nov 2026.",
+      "LD-001": "<strong>LD-001 (Collected):</strong> 15 items collected on 03 Nov 2026."
+    };
+
+    document.getElementById("tokenSearchBtn").addEventListener("click", function() {
+      const code = document.getElementById("tokenSearchInput").value.trim().toUpperCase();
+      const box = document.getElementById("lookupResult");
+      box.innerHTML = sampleTokens[code] || `No active record found for <strong>${code || "empty input"}</strong>. Try <strong>LD-003</strong>.`;
+      box.classList.remove("hidden");
+    });
+
+    // 4. Report Issue Form Confirmation
+    document.getElementById("issueForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const token = document.getElementById("issueToken").value;
+      const type = document.getElementById("issueType").value;
+      const ticket = "IS-0" + Math.floor(10 + Math.random() * 89);
+
+      const box = document.getElementById("issueResult");
+      box.innerHTML = `<strong>Ticket Submitted (${ticket}):</strong> Logged <em>${type}</em> for batch <strong>${token}</strong>. Sent to hostel laundry desk.`;
+      box.classList.remove("hidden");
+      document.getElementById("issueDesc").value = "";
+    });
+  </script>
+
+</body>
+</html>
